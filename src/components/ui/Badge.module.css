@@ -1,0 +1,35 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.default {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+}
+
+.primary {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.accent {
+  background: var(--color-accent-light);
+  color: #92400E;
+}
+
+.success {
+  background: var(--color-success-light);
+  color: #065F46;
+}
+
+.danger {
+  background: var(--color-danger-light);
+  color: #991B1B;
+}

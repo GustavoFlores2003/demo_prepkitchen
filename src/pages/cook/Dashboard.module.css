@@ -1,0 +1,58 @@
+.page {
+  animation: fadeIn var(--transition-base) ease-out;
+}
+
+.greeting {
+  margin-bottom: var(--space-xl);
+}
+
+.greetingText {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+.greetingSub {
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+/* Categories section */
+.section {
+  margin-bottom: var(--space-2xl);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-md);
+}
+
+/* Recent recipes */
+.recipeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+  .categoryGrid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .greetingText {
+    font-size: var(--font-size-xl);
+  }
+}
