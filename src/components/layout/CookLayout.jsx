@@ -26,7 +26,7 @@ export default function CookLayout() {
         <div className={styles.headerInner}>
           <Link to="/cook/dashboard" className={styles.logo}>
             <span className={styles.logoIcon}>👨‍🍳</span>
-            <span className={styles.logoText}>PrepKitchen</span>
+            <span className={styles.logoText}>Demo Kitchen</span>
           </Link>
 
           <div className={styles.searchWrapper}>

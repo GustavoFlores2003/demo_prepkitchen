@@ -40,7 +40,7 @@ export default function AdminLayout() {
         <div className={styles.sidebarHeader}>
           <div className={styles.sidebarLogo}>
             <span className={styles.sidebarIcon}>👨‍🍳</span>
-            <span className={styles.sidebarTitle}>PrepKitchen</span>
+            <span className={styles.sidebarTitle}>Demo Kitchen</span>
             <span className={styles.sidebarBadge}>Admin</span>
           </div>
         </div>

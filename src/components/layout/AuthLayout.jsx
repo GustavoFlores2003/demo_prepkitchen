@@ -6,7 +6,7 @@ export default function AuthLayout({ children }) {
       <div className={styles.card}>
         <div className={styles.logo}>
           <div className={styles.logoIcon}>👨‍🍳</div>
-          <h1 className={styles.logoTitle}>PrepKitchen</h1>
+          <h1 className={styles.logoTitle}>Demo Kitchen</h1>
           <p className={styles.logoSub}>Gestión de preparaciones</p>
         </div>
         {children}

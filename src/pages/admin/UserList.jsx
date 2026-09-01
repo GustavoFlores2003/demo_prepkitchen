@@ -159,7 +159,7 @@ export default function UserList() {
               type="email"
               value={newUser.email}
               onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-              placeholder="juan@prepkitchen.cl"
+              placeholder="juan@demokitchen.com"
               required
             />
           </div>
