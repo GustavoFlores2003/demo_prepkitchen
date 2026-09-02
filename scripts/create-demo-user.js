@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
+import ws from 'ws';
 
 // Cargar variables de entorno del archivo .env en la raíz
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +23,12 @@ const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
+  },
+  global: {
+    fetch: fetch
+  },
+  realtime: {
+    transport: ws // Esto soluciona el error de Node.js 20 sin WebSocket nativo
   }
 });
 
