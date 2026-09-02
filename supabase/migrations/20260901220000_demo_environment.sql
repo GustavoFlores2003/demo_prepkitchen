@@ -36,7 +36,20 @@ CREATE POLICY "Users: Select" ON users FOR SELECT USING (auth.role() = 'authenti
 
 -- USERS: Demo no puede insertar, actualizar ni borrar. Solo los admins reales pueden.
 DROP POLICY IF EXISTS "Users: Modificaciones Admin" ON users;
-CREATE POLICY "Users: Modificaciones Admin" ON users FOR ALL USING (
+DROP POLICY IF EXISTS "Users: Insert Admin" ON users;
+CREATE POLICY "Users: Insert Admin" ON users FOR INSERT WITH CHECK (
+  auth.role() = 'authenticated' AND 
+  auth.jwt()->>'email' != 'demo_admin@prepkitchen.com' AND
+  EXISTS (SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin')
+);
+DROP POLICY IF EXISTS "Users: Update Admin" ON users;
+CREATE POLICY "Users: Update Admin" ON users FOR UPDATE USING (
+  auth.role() = 'authenticated' AND 
+  auth.jwt()->>'email' != 'demo_admin@prepkitchen.com' AND
+  EXISTS (SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin')
+);
+DROP POLICY IF EXISTS "Users: Delete Admin" ON users;
+CREATE POLICY "Users: Delete Admin" ON users FOR DELETE USING (
   auth.role() = 'authenticated' AND 
   auth.jwt()->>'email' != 'demo_admin@prepkitchen.com' AND
   EXISTS (SELECT 1 FROM users WHERE id = auth.uid() AND role = 'admin')
