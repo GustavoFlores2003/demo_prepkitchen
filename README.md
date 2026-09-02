@@ -2,154 +2,175 @@
 
 > Aplicación web para la gestión de preparaciones culinarias y estandarización de recetas en entornos gastronómicos profesionales (restaurantes, dark kitchens y servicios de catering).
 
----
+================================================================================
+TABLA DE CONTENIDOS
+================================================================================
+1. Propósito del Proyecto
+2. Roles de Usuario
+3. Stack Tecnológico
+4. Arquitectura del Proyecto
+5. Estructura de la Base de Datos
+6. Flujo de Trabajo y Seguridad
+7. Instalación y Configuración Local
+8. Variables de Entorno
+9. Despliegue
 
-## 📌 Tabla de Contenidos
+================================================================================
+1. PROPÓSITO DEL PROYECTO
+================================================================================
+PrepKitchen (nombre interno) es una aplicación web de gestión de preparaciones y
+estandarización de recetas enfocada en el rubro gastronómico (restaurantes, dark
+kitchens, catering).
 
-- [Propósito del Proyecto](#-propósito-del-proyecto)
-- [Características Principales](#-características-principales)
-- [Roles de Usuario (RBAC)](#-roles-de-usuario-rbac)
-- [Stack Tecnológico](#-stack-tecnológico)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Modelo de Base de Datos](#-modelo-de-base-de-datos)
-- [Seguridad y Flujo de Trabajo](#-seguridad-y-flujo-de-trabajo)
-- [Instalación y Configuración Local](#-instalación-y-configuración-local)
-- [Variables de Entorno](#-variables-de-entorno)
-- [Despliegue](#-despliegue)
+Su objetivo principal es resolver el problema de la consistencia en la cocina.
+Permite tener un recetario digital estandarizado donde los cocineros pueden
+consultar cómo preparar exactamente cada elemento, mientras que los administradores
+controlan las recetas, categorías y accesos del personal.
 
----
+================================================================================
+2. ROLES DE USUARIO
+================================================================================
+El sistema se basa en el control de acceso por roles (RBAC). Existen dos roles
+principales:
 
-## 🎯 Propósito del Proyecto
+- Administrador (admin):
+  Tiene control total. Puede crear, editar y eliminar recetas, gestionar los
+  usuarios del sistema (dar de alta a cocineros) y ver el historial de cambios.
 
-Uno de los mayores desafíos en el sector gastronómico es garantizar la **consistencia y estandarización** de los platos. **PrepKitchen** resuelve este problema centralizando las preparaciones en un recetario digital interactivo y optimizado para estaciones de trabajo.
+- Cocinero (cocinero):
+  Es un usuario de solo lectura. Su interfaz está optimizada para la cocina
+  (tablets/celulares) y solo puede buscar, navegar por categorías y visualizar
+  las recetas paso a paso con sus ingredientes.
 
-Permite que el personal de cocina consulte especificaciones exactas, tiempos de vida útil y métodos paso a paso en tiempo real, mientras los administradores controlan recetas, categorías, auditoría y accesos.
+================================================================================
+3. STACK TECNOLÓGICO
+================================================================================
+El proyecto utiliza un stack moderno, rápido y sin servidor tradicional
+(Serverless / BaaS):
 
----
+Frontend (Cliente):
+- React 19: Biblioteca principal para construir la interfaz de usuario.
+- Vite: Empaquetador y servidor de desarrollo ultrarrápido (reemplaza a Create React App).
+- React Router DOM v7: Manejo de rutas y navegación entre páginas (ej: /login, /admin, /cook).
+- CSS / UI: Estilos personalizados modernos, diseñados para ser responsivos (Mobile-First) ya que se usará en cocinas.
 
-## ✨ Características Principales
+Backend / Base de Datos:
+- Supabase: Plataforma Backend-as-a-Service (BaaS) basada en PostgreSQL.
+  * Base de datos relacional: Almacenamiento estructurado.
+  * Autenticación (Supabase Auth): Manejo de sesiones, login y encriptación de contraseñas.
+  * Edge Functions: Funciones sin servidor (ej: para crear usuarios desde el panel de admin sin perder la sesión actual).
+  * Row Level Security (RLS): Políticas de seguridad a nivel de base de datos.
 
-- 📱 **Diseño Mobile-First:** Interfaz táctil optimizada para el ritmo acelerado de la cocina en tablets y smartphones.
-- 🔐 **Control de Acceso por Roles (RBAC):** Vistas y permisos estrictamente diferenciados entre administradores y cocineros.
-- 📖 **Estandarización Detallada:** Recetas desglosadas por ingredientes exactos, instrucciones ordenadas paso a paso y condiciones de almacenamiento / shelf life.
-- 🕒 **Historial de Auditoría:** Registro automático de modificaciones, creaciones y eliminaciones de recetas con trazabilidad de autor.
-- ⚡ **Arquitectura Serverless:** Conexión directa y en tiempo real a la base de datos sin necesidad de mantener un servidor tradicional.
+================================================================================
+4. ARQUITECTURA DEL PROYECTO
+================================================================================
+El código está estructurado de forma modular dentro de la carpeta src/:
 
----
-
-## 👥 Roles de Usuario (RBAC)
-
-| Rol | Tipo de Acceso | Funcionalidades Principales |
-| :--- | :--- | :--- |
-| **Administrador (`admin`)** | Control Total (Lectura / Escritura) | Gestión integral de recetas y categorías, alta y administración de usuarios/cocineros, consulta del historial de auditoría de cambios. |
-| **Cocinero (`cocinero`)** | Solo Lectura | Navegación por categorías, buscador rápido de recetas, visualización detallada de ingredientes, pasos y notas de preparación. |
-
----
-
-## 🛠️ Stack Tecnológico
-
-### Frontend
-- **[React 19](https://react.dev/):** Biblioteca para la interfaz de usuario con arquitectura modular basada en componentes y hooks.
-- **[Vite](https://vitejs.dev/):** Herramienta de bundling y servidor de desarrollo ultrarrápido.
-- **[React Router DOM v7](https://reactrouter.com/):** Enrutamiento declarativo y protección de rutas mediante contextos.
-- **CSS3 / UI Personalizada:** Sistema de diseño responsivo adaptado a pantallas táctiles.
-
-### Backend & Persistencia (BaaS)
-- **[Supabase](https://supabase.com/):**
-  - **PostgreSQL:** Base de datos relacional para modelos estructurados.
-  - **Supabase Auth:** Autenticación de usuarios, manejo de sesiones seguras y cifrado.
-  - **Row Level Security (RLS):** Reglas de seguridad y control de acceso ejecutadas a nivel de base de datos.
-  - **Edge Functions:** Funciones serverless para tareas privilegiadas (como la creación de usuarios desde el panel administrativo sin comprometer la sesión activa).
-
----
-
-## 📁 Estructura del Proyecto
-
-```text
 src/
-├── components/       # Componentes reutilizables
-│   ├── layout/       # Contenedores estructurales (AdminLayout, CookLayout)
-│   └── ui/           # Elementos atómicos de UI (Spinner, Botones, Inputs)
-├── contexts/         # Estado global de la aplicación
-│   └── AuthContext.jsx # Proveedor de sesión y validación de rol
-├── lib/              # Configuración de librerías y constantes
-│   ├── constants.js  # Definición de constantes globales (roles, estados)
-│   └── supabase.js   # Inicialización y cliente de Supabase
-├── pages/            # Vistas principales de la aplicación
-│   ├── admin/        # Vistas de gestión (UserList, RecipeForm, etc.)
-│   ├── auth/         # Pantallas de autenticación (Login)
-│   └── cook/         # Vistas de cocina (Dashboard, RecipeDetail)
-├── services/         # Capa de abstracción para consultas a Supabase
+├── components/       # Componentes visuales reutilizables
+│   ├── layout/       # Envoltorios de página (AdminLayout, CookLayout)
+│   └── ui/           # Elementos pequeños (Spinner, Botones, Inputs)
+├── contexts/         # Manejo de estado global
+│   └── AuthContext   # Controla si el usuario está logueado y su rol
+├── lib/              # Configuraciones y utilidades compartidas
+│   ├── constants.js  # Variables constantes (ROLES, etc.)
+│   └── supabase.js   # Inicialización del cliente de Supabase
+├── pages/            # Las pantallas o vistas completas de la app
+│   ├── admin/        # Vistas exclusivas del administrador (UserList, RecipeForm)
+│   ├── auth/         # Login
+│   └── cook/         # Vistas exclusivas del cocinero (Dashboard, RecipeDetail)
+├── services/         # Lógica de conexión a la Base de Datos (Consultas SQL/Supabase)
 │   ├── categoryService.js
 │   ├── historyService.js
 │   ├── recipeService.js
 │   └── userService.js
-├── App.jsx           # Enrutador principal y configuración de rutas protegidas
-└── main.jsx          # Punto de entrada de la aplicación
-🗄️ Modelo de Base de Datos
-El esquema relacional en PostgreSQL está diseñado para garantizar integridad referencial y auditoría continua:
+└── App.jsx           # Archivo principal de rutas (Router) y protección de accesos
 
-users: Extensión del esquema de autenticación de Supabase (auth.users). Contiene atributos como name, role (admin | cocinero) y estado active.
+================================================================================
+5. ESTRUCTURA DE LA BASE DE DATOS
+================================================================================
+El modelo relacional está diseñado para mantener un historial y desglosar recetas
+complejas:
 
-categories: Clasificación de recetas (ej. Salsas, Bases, Cortes, Pastelería).
+- users:
+  Extiende la tabla nativa de Supabase Auth. Guarda el role, name y si está active.
 
-recipes: Entidad principal. Almacena título, categoría asociada, vida útil (shelf life) y condiciones de conservación.
+- categories:
+  Agrupa las recetas (ej: Salsas, Cortes de Carne).
 
-recipe_ingredients: Tabla relacional que desglosa ingredientes, cantidades y unidades asociadas a cada receta.
+- recipes:
+  La tabla central. Guarda el nombre, categoría, tiempo de vida útil (shelf life)
+  y condiciones de almacenamiento.
 
-recipe_steps: Secuencia ordenada de pasos de preparación.
+- recipe_ingredients:
+  Tabla pivote que lista los ingredientes y cantidades exactas de una receta.
 
-recipe_history: Bitácora de auditoría que registra cada operación (CREATE, UPDATE, DELETE) junto con la fecha, el usuario responsable y el detalle de los cambios.
+- recipe_steps:
+  Guarda las instrucciones ordenadas paso a paso para elaborar la receta.
 
-🛡️ Seguridad y Flujo de Trabajo
-Rutas Protegidas: Mediante componentes envoltorios (<ProtectedRoute>, <AdminRoute>, <CookRoute>), la aplicación valida en cada cambio de ruta el estado de AuthContext. Intentos de acceso no autorizados redirigen al usuario a su panel correspondiente o al login.
+- recipe_history:
+  Un registro de auditoría (logs). Cada vez que un admin crea, edita o elimina
+  una receta, se guarda qué cambió y quién lo hizo.
 
-Políticas RLS: Supabase aplica políticas estrictas a nivel de fila, asegurando que un usuario con rol de solo lectura no pueda mutar datos directamente a través de la API.
+================================================================================
+6. FLUJO DE TRABAJO Y SEGURIDAD
+================================================================================
+- Rutas Protegidas:
+  El archivo App.jsx contiene componentes como <ProtectedRoute>, <AdminRoute> y
+  <CookRoute> que evalúan el estado de AuthContext. Si un cocinero intenta entrar
+  a una URL de /admin, es redirigido automáticamente.
 
-Manejo Seguro de Identidad: La creación de credenciales para nuevos cocineros se procesa a través de una Edge Function para no interferir con el token activo del administrador.
+- Políticas de Base de Datos (RLS):
+  Políticas de seguridad a nivel de fila (Row Level Security) que impiden modificaciones
+  no autorizadas directo en PostgreSQL.
 
-🚀 Instalación y Configuración Local
-Prerrequisitos
-Node.js (versión 18 o superior recomendada)
+- Aislamiento de Sesiones:
+  Uso de Edge Functions para tareas administrativas (crear usuarios) sin desconectar
+  la sesión activa del administrador.
 
-Gestor de paquetes npm o pnpm
+================================================================================
+7. INSTALACIÓN Y CONFIGURACIÓN LOCAL
+================================================================================
+Prerrequisitos:
+- Node.js (versión 18 o superior recomendada)
+- npm o gestor de paquetes de preferencia
+- Cuenta y proyecto activo en Supabase
 
-Proyecto activo en Supabase
+Pasos de instalación:
+1. Clonar el repositorio:
+   git clone https://github.com/tu-usuario/prepkitchen.git
+   cd prepkitchen
 
-Pasos
-Clonar el repositorio:
+2. Instalar dependencias:
+   npm install
 
-Bash
-git clone [https://github.com/tu-usuario/prepkitchen.git](https://github.com/tu-usuario/prepkitchen.git)
-cd prepkitchen
-Instalar dependencias:
+3. Configurar variables de entorno:
+   Copiar o crear el archivo .env en la raíz del proyecto (ver sección 8).
 
-Bash
-npm install
-Configurar las variables de entorno:
-Crea un archivo .env en la raíz del proyecto tomando como referencia el archivo .env.example:
+4. Iniciar servidor local de desarrollo:
+   npm run dev
 
-Bash
-cp .env.example .env
-Iniciar el entorno de desarrollo:
+   La app iniciará por defecto en http://localhost:5173
 
-Bash
-npm run dev
-La aplicación quedará disponible en http://localhost:5173.
+================================================================================
+8. VARIABLES DE ENTORNO
+================================================================================
+El proyecto requiere un archivo .env en la raíz local y configurar las mismas
+variables en el hosting de producción para conectar React con Supabase:
 
-🔑 Variables de Entorno
-Configura las siguientes credenciales en tu archivo .env:
-
-Fragmento de código
-VITE_SUPABASE_URL=[https://tu-proyecto.supabase.co](https://tu-proyecto.supabase.co)
+VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
 VITE_SUPABASE_ANON_KEY=tu-anon-key-de-supabase
-🌐 Despliegue
-Al tratarse de una SPA estática construida con Vite, el proyecto puede desplegarse en cualquier servicio de hosting estático:
 
-Generar la compilación para producción:
+================================================================================
+9. DESPLIEGUE
+================================================================================
+El frontend está diseñado para hospedarse en servicios de archivos estáticos
+(como Netlify, Vercel o GitHub Pages), mientras Supabase mantiene toda la lógica
+de backend 24/7 de forma externa:
 
-Bash
-npm run build
-La carpeta resultante dist/ puede vincularse a servicios como Vercel, Netlify o Cloudflare Pages.
+1. Ejecutar la compilación para producción:
+   npm run build
 
-Asegúrate de configurar las variables de entorno (VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY) en el panel del proveedor de hosting elegido y configurar la redirección hacia index.html para el correcto funcionamiento de React Router.
+2. El directorio generado (dist/) se despliega en el proveedor elegido.
+3. Asegurar la configuración de las variables de entorno en el panel del hosting
+   y añadir las reglas de redirección a index.html para soportar el enrutamiento
