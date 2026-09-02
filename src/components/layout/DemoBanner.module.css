@@ -1,0 +1,18 @@
+.banner {
+  background-color: #fef08a;
+  color: #854d0e;
+  text-align: center;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  z-index: 50;
+}
+
+.icon {
+  font-size: 1.125rem;
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import DemoBanner from './DemoBanner';
 import styles from './AdminLayout.module.css';
 
 const NAV_ITEMS = [
@@ -31,8 +32,10 @@ export default function AdminLayout() {
     .toUpperCase() || '?';
 
   return (
-    <div className={styles.layout}>
-      {sidebarOpen && (
+    <>
+      <DemoBanner />
+      <div className={styles.layout}>
+        {sidebarOpen && (
         <div className={styles.overlay} onClick={() => setSidebarOpen(false)} />
       )}
 
@@ -93,5 +96,6 @@ export default function AdminLayout() {
         </div>
       </main>
     </div>
+    </>
   );
 }

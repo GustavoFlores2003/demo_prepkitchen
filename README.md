@@ -24,6 +24,19 @@ Cada receta puede contener sus ingredientes, cantidades, procedimiento paso a pa
 
 ---
 
+## 🚀 Demo
+
+Puedes probar una versión pública y reiniciable de la aplicación:
+
+**URL de la Aplicación:** [TU_URL_AQUI]
+
+**Usuario:** `demo_admin@prepkitchen.com`  
+**Contraseña:** `admin123456`
+
+> **Nota:** Esta cuenta corresponde exclusivamente a un entorno de demostración. Los datos pueden ser modificados libremente y se restauran automáticamente cada 30 minutos. El usuario Demo cuenta con permisos aislados para garantizar la integridad de los datos reales del sistema.
+
+---
+
 ## ✨ Funcionalidades
 
 ### 👨‍💼 Administrador

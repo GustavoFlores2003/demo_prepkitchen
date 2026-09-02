@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import SearchBar from '../ui/SearchBar';
+import DemoBanner from './DemoBanner';
 import styles from './CookLayout.module.css';
 
 export default function CookLayout() {
@@ -21,8 +22,10 @@ export default function CookLayout() {
   }
 
   return (
-    <div className={styles.layout}>
-      <header className={styles.header}>
+    <>
+      <DemoBanner />
+      <div className={styles.layout}>
+        <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link to="/cook/dashboard" className={styles.logo}>
             <span className={styles.logoIcon}>👨‍🍳</span>
@@ -52,5 +55,6 @@ export default function CookLayout() {
         <Outlet />
       </main>
     </div>
+    </>
   );
 }
